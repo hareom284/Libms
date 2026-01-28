@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }} - Library Management System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .form-container {
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .form-label {
+            font-weight: 600;
+        }
+        .required:after {
+            content: " *";
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'index' %}">📚 Library MS</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'index' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'book_list' %}">Books</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'book_create' %}">Add Book</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/">Admin</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'book_list' %}">Books</a></li>
+                <li class="breadcrumb-item active">{{ title }}</li>
+            </ol>
+        </nav>
+
+        <div class="form-container">
+            <h2 class="mb-4">{{ title }}</h2>
+
+            {% if form.errors %}
+                <div class="alert alert-danger" role="alert">
+                    <h5>Please correct the errors below:</h5>
+                    {{ form.errors }}
+                </div>
+            {% endif %}
+
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <div class="mb-3">
+                    <label for="{{ form.title.id_for_label }}" class="form-label required">Title</label>
+                    {{ form.title }}
+                    {% if form.title.errors %}
+                        <div class="text-danger">{{ form.title.errors }}</div>
+                    {% endif %}
+                    <div class="form-text">{{ form.title.help_text }}</div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="{{ form.author.id_for_label }}" class="form-label required">Author</label>
+                    {{ form.author }}
+                    {% if form.author.errors %}
+                        <div class="text-danger">{{ form.author.errors }}</div>
+                    {% endif %}
+                    <div class="form-text">{{ form.author.help_text }}</div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="{{ form.isbn.id_for_label }}" class="form-label required">ISBN</label>
+                    {{ form.isbn }}
+                    {% if form.isbn.errors %}
+                        <div class="text-danger">{{ form.isbn.errors }}</div>
+                    {% endif %}
+                    <div class="form-text">{{ form.isbn.help_text }}</div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="{{ form.category.id_for_label }}" class="form-label required">Category</label>
+                    {{ form.category }}
+                    {% if form.category.errors %}
+                        <div class="text-danger">{{ form.category.errors }}</div>
+                    {% endif %}
+                    <div class="form-text">{{ form.category.help_text }}</div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="{{ form.description.id_for_label }}" class="form-label required">Description</label>
+                    {{ form.description }}
+                    {% if form.description.errors %}
+                        <div class="text-danger">{{ form.description.errors }}</div>
+                    {% endif %}
+                    <div class="form-text">{{ form.description.help_text }}</div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="{{ form.published_date.id_for_label }}" class="form-label required">Published Date</label>
+                    {{ form.published_date }}
+                    {% if form.published_date.errors %}
+                        <div class="text-danger">{{ form.published_date.errors }}</div>
+                    {% endif %}
+                    <div class="form-text">{{ form.published_date.help_text }}</div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="{{ form.available_copies.id_for_label }}" class="form-label required">Available Copies</label>
+                    {{ form.available_copies }}
+                    {% if form.available_copies.errors %}
+                        <div class="text-danger">{{ form.available_copies.errors }}</div>
+                    {% endif %}
+                    <div class="form-text">{{ form.available_copies.help_text }}</div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="{{ form.cover_pic.id_for_label }}" class="form-label">Cover Image</label>
+                    {{ form.cover_pic }}
+                    {% if form.cover_pic.errors %}
+                        <div class="text-danger">{{ form.cover_pic.errors }}</div>
+                    {% endif %}
+                    <div class="form-text">{{ form.cover_pic.help_text }}</div>
+                    {% if book.cover_pic %}
+                        <div class="mt-2">
+                            <small class="text-muted">Current: {{ book.cover_pic.name }}</small><br>
+                            <img src="{{ book.cover_pic.url }}" alt="Current cover" style="max-width: 200px; margin-top: 10px;">
+                        </div>
+                    {% endif %}
+                </div>
+
+                <hr>
+
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <a href="{% if book %}{% url 'book_detail' book.pk %}{% else %}{% url 'book_list' %}{% endif %}" class="btn btn-secondary">
+                        Cancel
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        {% if book %}
+                            Update Book
+                        {% else %}
+                            Create Book
+                        {% endif %}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

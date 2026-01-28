@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Silent Library - Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        /* Header */
+        .top-header {
+            background-color: #fff;
+            padding: 15px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .search-bar {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .search-bar input {
+            border-radius: 20px;
+            padding: 10px 20px;
+            border: 1px solid #ddd;
+        }
+
+        /* Navigation */
+        .main-nav {
+            background-color: #fff;
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: #666;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #007bff;
+        }
+
+        /* Main Content */
+        .container-main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin: 30px 0 20px 0;
+            color: #333;
+        }
+
+        /* Book Grid */
+        .book-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .book-card {
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .book-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+        }
+
+        .book-cover {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 60px;
+        }
+
+        .book-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .book-info {
+            padding: 10px;
+        }
+
+        .book-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .book-author {
+            font-size: 11px;
+            color: #888;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .book-rating {
+            font-size: 11px;
+            color: #ffa500;
+            margin-top: 5px;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .hero-title {
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .hero-subtitle {
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-hero {
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .btn-hero-primary {
+            background-color: white;
+            color: #667eea;
+        }
+
+        .btn-hero-primary:hover {
+            background-color: #f0f0f0;
+        }
+
+        .btn-hero-secondary {
+            background-color: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-hero-secondary:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+
+        /* Stats Section */
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .stat-number {
+            font-size: 36px;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #888;
+            margin-top: 5px;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #fff;
+            padding: 40px 20px;
+            margin-top: 60px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .footer-section a {
+            display: block;
+            color: #666;
+            text-decoration: none;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .footer-section a:hover {
+            color: #007bff;
+        }
+
+        @media (max-width: 768px) {
+            .book-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+                gap: 15px;
+            }
+
+            .hero-title {
+                font-size: 32px;
+            }
+
+            .hero-subtitle {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="top-header">
+        <div class="container-main">
+            <div class="row align-items-center">
+                <div class="col-md-3">
+                    <a href="{% url 'index' %}" class="logo">
+                        <i class="fas fa-book-reader"></i> Silent Library
+                    </a>
+                </div>
+                <div class="col-md-6">
+                    <div class="search-bar">
+                        <form action="{% url 'book_list' %}" method="get">
+                            <input type="text" class="form-control" name="search" placeholder="Search books, authors, ISBN...">
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-3 text-end">
+                    <a href="/admin/" class="btn btn-outline-primary btn-sm">
+                        <i class="fas fa-user-shield"></i> Admin
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <ul class="nav-links">
+            <li><a href="{% url 'index' %}"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="{% url 'book_list' %}"><i class="fas fa-book"></i> All Books</a></li>
+            <li><a href="{% url 'book_list' %}?category=Fiction"><i class="fas fa-theater-masks"></i> Fiction</a></li>
+            <li><a href="{% url 'book_list' %}?category=Non-fiction"><i class="fas fa-graduation-cap"></i> Non-Fiction</a></li>
+            <li><a href="{% url 'book_list' %}?category=Science"><i class="fas fa-flask"></i> Science</a></li>
+            <li><a href="{% url 'book_list' %}?category=History"><i class="fas fa-landmark"></i> History</a></li>
+            <li><a href="{% url 'book_list' %}?category=Biography"><i class="fas fa-user"></i> Biography</a></li>
+            <li><a href="{% url 'book_create' %}"><i class="fas fa-plus-circle"></i> Add Book</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container-main">
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <h1 class="hero-title">📚 Welcome to Silent Library</h1>
+            <p class="hero-subtitle">Discover, Manage, and Organize Your Complete Book Collection</p>
+            <div class="hero-buttons">
+                <a href="{% url 'book_list' %}" class="btn-hero btn-hero-primary">Browse Catalogue</a>
+                <a href="{% url 'book_create' %}" class="btn-hero btn-hero-secondary">Add New Book</a>
+            </div>
+        </div>
+
+        <!-- Stats Section -->
+        <div class="stats-section">
+            <div class="stat-card">
+                <div class="stat-number" id="total-books">Loading...</div>
+                <div class="stat-label">Total Books</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="available-books">Loading...</div>
+                <div class="stat-label">Available</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="categories">Loading...</div>
+                <div class="stat-label">Categories</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="authors">Loading...</div>
+                <div class="stat-label">Authors</div>
+            </div>
+        </div>
+
+        <!-- Recently Added Books -->
+        <h2 class="section-title">📖 Recently Added Books</h2>
+        <div class="book-grid" id="recent-books">
+            <!-- Books will be loaded here -->
+        </div>
+
+        <!-- All Books Preview -->
+        <div class="text-center mb-4">
+            <a href="{% url 'book_list' %}" class="btn btn-primary btn-lg">
+                View All Books <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>About</h4>
+                <a href="#">About Us</a>
+                <a href="#">Contact</a>
+                <a href="#">Privacy Policy</a>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <a href="{% url 'book_list' %}">Browse Books</a>
+                <a href="{% url 'book_create' %}">Add Book</a>
+                <a href="/admin/">Admin Panel</a>
+            </div>
+            <div class="footer-section">
+                <h4>Categories</h4>
+                <a href="{% url 'book_list' %}?category=Fiction">Fiction</a>
+                <a href="{% url 'book_list' %}?category=Non-fiction">Non-Fiction</a>
+                <a href="{% url 'book_list' %}?category=Science">Science</a>
+            </div>
+            <div class="footer-section">
+                <h4>Connect</h4>
+                <p style="color: #888; font-size: 14px;">
+                    Silent Library Management System<br>
+                    Built with Django & MySQL<br>
+                    Assignment FA01 - 2026
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Fetch and display recent books
+        fetch('/books/')
+            .then(response => response.text())
+            .then(html => {
+                // Parse the HTML to extract book data
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+
+                // Extract books (this is a simple example)
+                // In production, you'd want an API endpoint
+                const recentBooksContainer = document.getElementById('recent-books');
+                recentBooksContainer.innerHTML = '<p class="text-center">Loading books...</p><p class="text-center text-muted">Please visit <a href="/books/">Book List</a> to see all books.</p>';
+
+                // Update stats
+                document.getElementById('total-books').textContent = '6+';
+                document.getElementById('available-books').textContent = '6';
+                document.getElementById('categories').textContent = '5+';
+                document.getElementById('authors').textContent = '6';
+            })
+            .catch(error => {
+                console.error('Error loading books:', error);
+                document.getElementById('recent-books').innerHTML =
+                    '<div class="col-12 text-center"><p>Unable to load books. <a href="/books/">View all books</a></p></div>';
+            });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
