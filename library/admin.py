@@ -1,5 +1,12 @@
 from django.contrib import admin
-from .models import Book
+from .models import Book, UserProfile
+
+
+@admin.register(UserProfile)
+class UserProfileAdmin(admin.ModelAdmin):
+    list_display = ('user', 'phone_number', 'date_of_birth')
+    search_fields = ('user__username', 'user__email', 'phone_number')
+    list_filter = ('date_of_birth',)
 
 
 @admin.register(Book)

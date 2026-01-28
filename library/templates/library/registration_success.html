@@ -1,0 +1,33 @@
+{% extends 'library/base.html' %}
+
+{% block title %}Registration Successful - Silent Library{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 text-center">
+        <div class="card card-custom">
+            <div class="card-body p-5">
+                <div class="mb-4">
+                    <i class="fas fa-check-circle text-success" style="font-size: 80px;"></i>
+                </div>
+                <h1 class="card-title mb-4">Registration Successful!</h1>
+                <p class="lead">Welcome to Silent Library</p>
+                <p class="text-muted mb-4">
+                    Your account has been created successfully. A confirmation email has been sent to your email address.
+                </p>
+                <p class="text-muted mb-4">
+                    You can now explore our library collection, manage your reading list, and much more!
+                </p>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                    <a href="{% url 'user_dashboard' %}" class="btn btn-primary btn-primary-custom btn-lg">
+                        <i class="fas fa-tachometer-alt"></i> Go to Dashboard
+                    </a>
+                    <a href="{% url 'book_list' %}" class="btn btn-outline-primary btn-lg">
+                        <i class="fas fa-book"></i> Browse Books
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

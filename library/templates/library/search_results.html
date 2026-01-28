@@ -1,0 +1,107 @@
+{% extends 'library/base.html' %}
+
+{% block title %}Search Books - Silent Library{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h1 class="mb-4">
+            <i class="fas fa-search text-primary"></i> Search Books
+        </h1>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card card-custom">
+            <div class="card-body p-4">
+                <form method="get" action="{% url 'book_search' %}">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <input type="text" name="q" class="form-control form-control-lg"
+                                   placeholder="Search by title, author, category..." value="{{ query }}">
+                        </div>
+                        <div class="col-md-4">
+                            <select name="type" class="form-select form-select-lg">
+                                <option value="all" {% if search_type == 'all' %}selected{% endif %}>All Fields</option>
+                                <option value="title" {% if search_type == 'title' %}selected{% endif %}>Title</option>
+                                <option value="author" {% if search_type == 'author' %}selected{% endif %}>Author</option>
+                                <option value="genre" {% if search_type == 'genre' %}selected{% endif %}>Genre/Category</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="submit" class="btn btn-primary btn-primary-custom btn-lg w-100">
+                                <i class="fas fa-search"></i> Search
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if query %}
+    <div class="row mb-3">
+        <div class="col-12">
+            <h4>Search Results for "{{ query }}"</h4>
+            <p class="text-muted">Found {{ books.count }} book(s)</p>
+        </div>
+    </div>
+
+    {% if books %}
+        <div class="row g-4">
+            {% for book in books %}
+                <div class="col-md-4 col-lg-3">
+                    <div class="card card-custom h-100">
+                        {% if book.cover_pic %}
+                            <img src="{{ book.cover_pic.url }}" class="card-img-top" alt="{{ book.title }}"
+                                 style="height: 250px; object-fit: cover;">
+                        {% else %}
+                            <div class="bg-gradient text-white d-flex align-items-center justify-content-center"
+                                 style="height: 250px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                                <i class="fas fa-book fa-4x"></i>
+                            </div>
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ book.title }}</h5>
+                            <p class="card-text">
+                                <small class="text-muted">
+                                    <i class="fas fa-user"></i> {{ book.author }}<br>
+                                    <i class="fas fa-tag"></i> {{ book.category }}<br>
+                                    <i class="fas fa-barcode"></i> {{ book.isbn }}
+                                </small>
+                            </p>
+                            <p class="card-text">
+                                <small>
+                                    <span class="badge bg-{% if book.available_copies > 0 %}success{% else %}danger{% endif %}">
+                                        {{ book.available_copies }} Available
+                                    </span>
+                                </small>
+                            </p>
+                        </div>
+                        <div class="card-footer bg-white">
+                            <a href="{% url 'book_detail' book.pk %}" class="btn btn-sm btn-primary btn-primary-custom w-100">
+                                <i class="fas fa-eye"></i> View Details
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            <i class="fas fa-info-circle"></i> No books found matching your search criteria.
+            Try searching with different keywords.
+        </div>
+    {% endif %}
+{% else %}
+    <div class="row">
+        <div class="col-12 text-center py-5">
+            <i class="fas fa-search fa-5x text-muted mb-3"></i>
+            <h4>Start Your Search</h4>
+            <p class="text-muted">Enter keywords above to find books in our library</p>
+        </div>
+    </div>
+{% endif %}
+{% endblock %}
