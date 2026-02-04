@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordResetForm
-from .models import Book, UserProfile
+from .models import Book, UserProfile, Review
 
 
 class UserRegistrationForm(UserCreationForm):
@@ -169,4 +169,28 @@ class BookForm(forms.ModelForm):
             'cover_pic': forms.FileInput(attrs={
                 'class': 'form-control'
             })
+        }
+
+
+class ReviewForm(forms.ModelForm):
+    """
+    Form for users to submit book reviews and ratings
+    """
+    class Meta:
+        model = Review
+        fields = ['rating', 'review_text']
+        widgets = {
+            'rating': forms.Select(attrs={
+                'class': 'form-select',
+                'required': True
+            }),
+            'review_text': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': 5,
+                'placeholder': 'Share your thoughts about this book...'
+            })
+        }
+        labels = {
+            'rating': 'Your Rating',
+            'review_text': 'Your Review (Optional)'
         }

@@ -49,4 +49,12 @@ urlpatterns = [
 
     # Book Search
     path('search/', views.book_search, name='book_search'),
+
+    # Review URLs
+    path('books/<int:book_id>/review/add/', views.add_review, name='add_review'),
+    path('reviews/<int:review_id>/edit/', views.edit_review, name='edit_review'),
+    path('reviews/<int:review_id>/delete/', views.delete_review, name='delete_review'),
+
+    # Staff Dashboard
+    path('staff/dashboard/', views.staff_dashboard, name='staff_dashboard'),
 ]

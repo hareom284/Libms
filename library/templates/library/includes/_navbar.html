@@ -1,0 +1,119 @@
+<!-- Top Header -->
+<div class="top-header">
+    <div class="container">
+        <div class="row align-items-center py-3">
+            <div class="col-md-3">
+                <a href="{% url 'index' %}" class="logo">
+                    <i class="fas fa-book-reader"></i> Silent Library
+                </a>
+            </div>
+            <div class="col-md-6">
+                <div class="search-bar">
+                    <form action="{% url 'book_search' %}" method="get">
+                        <input type="text" class="form-control" name="q" placeholder="Search books, authors, ISBN...">
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-3 text-end">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'user_dashboard' %}" class="btn btn-outline-primary btn-sm me-2">
+                        <i class="fas fa-user"></i> {{ user.username }}
+                    </a>
+                    <a href="{% url 'logout' %}" class="btn btn-outline-secondary btn-sm">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="btn btn-outline-primary btn-sm me-2">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </a>
+                    <a href="{% url 'register' %}" class="btn btn-primary btn-sm">
+                        <i class="fas fa-user-plus"></i> Register
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Navigation Bar -->
+<nav class="main-nav">
+    <div class="container">
+        <ul class="nav-links">
+            <li><a href="{% url 'index' %}"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="{% url 'book_list' %}"><i class="fas fa-book"></i> All Books</a></li>
+            <li><a href="{% url 'book_search' %}"><i class="fas fa-search"></i> Search</a></li>
+            {% if user.is_authenticated %}
+                {% if user.is_staff %}
+                    <li><a href="{% url 'book_create' %}"><i class="fas fa-plus-circle"></i> Add Book</a></li>
+                    <li><a href="{% url 'staff_dashboard' %}"><i class="fas fa-chart-line"></i> Staff Dashboard</a></li>
+                {% endif %}
+                <li><a href="{% url 'user_dashboard' %}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            {% else %}
+                <li><a href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                <li><a href="{% url 'register' %}"><i class="fas fa-user-plus"></i> Register</a></li>
+            {% endif %}
+            {% if user.is_staff %}
+                <li><a href="/admin/"><i class="fas fa-user-shield"></i> Admin</a></li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+
+<!-- Common Styles for Navigation -->
+<style>
+    .top-header {
+        background-color: #fff;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    .logo {
+        font-size: 24px;
+        font-weight: bold;
+        color: #333;
+        text-decoration: none;
+    }
+
+    .search-bar input {
+        border-radius: 20px;
+        padding: 10px 20px;
+        border: 1px solid #ddd;
+    }
+
+    .main-nav {
+        background-color: #fff;
+        padding: 10px 0;
+        border-bottom: 1px solid #e0e0e0;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 30px;
+        list-style: none;
+        justify-content: center;
+        flex-wrap: wrap;
+        padding: 0;
+        margin: 0;
+    }
+
+    .nav-links a {
+        color: #666;
+        text-decoration: none;
+        font-size: 14px;
+        transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+        color: #007bff;
+    }
+
+    @media (max-width: 768px) {
+        .nav-links {
+            gap: 15px;
+            font-size: 12px;
+        }
+    }
+</style>
